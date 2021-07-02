@@ -1,11 +1,20 @@
 from rest_framework import serializers
-from .models import Users, Contributors, Projects, Issues, Comments
+from .models import Contributors, Projects, Issues, Comments
+from django.contrib.auth.models import User
 
 
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Users
-        fields = ['id', 'first_name', 'last_name', 'email', 'password']
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name',
+                  'email', 'password']
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
 
 
 class ContributorsSerializer(serializers.ModelSerializer):
@@ -33,3 +42,4 @@ class CommentsSerializer(serializers.ModelSerializer):
         model = Comments
         fields = ['id', 'description', 'author_user_id', 'issue_id',
                   'created_time']
+

@@ -1,16 +1,16 @@
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, permissions, generics
 from .serializers import (UsersSerializer, ContributorsSerializer,
                           ProjectsSerializer, IssuesSerializer,
                           CommentsSerializer)
-from .models import Users, Contributors, Projects, Issues, Comments
+from .models import Contributors, Projects, Issues, Comments
+from django.contrib.auth.models import User
 
 
 class UsersViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Users.objects.all().order_by('id')
+    queryset = User.objects.all().order_by('id')
     serializer_class = UsersSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -49,3 +49,9 @@ class CommentsViewSet(viewsets.ModelViewSet):
     queryset = Comments.objects.all().order_by('id')
     serializer_class = CommentsSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class RegisterUser(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UsersSerializer
+    permission_classes = [permissions.AllowAny]
