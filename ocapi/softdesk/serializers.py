@@ -42,4 +42,3 @@ class CommentsSerializer(serializers.ModelSerializer):
         model = Comments
         fields = ['id', 'description', 'author_user_id', 'issue_id',
                   'created_time']
-
