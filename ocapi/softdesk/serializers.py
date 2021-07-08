@@ -28,7 +28,7 @@ class CommentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comments
-        fields = ['id', 'description', 'author', 'issue',
+        fields = ['id', 'description', 'author',
                   'created_time']
 
 
@@ -37,8 +37,7 @@ class IssuesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issues
         fields = ['id', 'title', 'desc', 'tag', 'priority',
-                  'project', 'status', 'author',
-                  'assignee', 'created_time']
+                  'status', 'author', 'assignee', 'created_time']
 
 
 class ProjectsSerializer(serializers.ModelSerializer):

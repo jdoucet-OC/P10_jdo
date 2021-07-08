@@ -13,10 +13,6 @@ class Projects(models.Model):
     description = models.CharField(max_length=4096)
     type = models.CharField(max_length=128, choices=type_choice)
 
-    author = models.ForeignKey(to=settings.AUTH_USER_MODEL,
-                               on_delete=models.SET_NULL,
-                               null=True)
-
 
 class Contributors(models.Model):
     """"""
@@ -29,8 +25,9 @@ class Contributors(models.Model):
     project = models.ForeignKey(to=Projects,
                                 on_delete=models.CASCADE)
     permission = models.CharField(max_length=128,
-                                  choices=permission_choice)
-    role = models.CharField(max_length=128)
+                                  choices=permission_choice,
+                                  default='contributor')
+    role = models.CharField(max_length=128, default='role')
 
 
 class Issues(models.Model):
